@@ -1,5 +1,5 @@
 import { useState } from "react";
-import style from "./header.module.scss";
+import style from "./Header.module.scss";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { searchCharacterByName } from "../../Redux/CharacterSlice";

@@ -1,31 +1,85 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment, incrementByAmount, fetchCharacters } from "../../slices/charactersSlice";
-import { AppDispatch, RootState } from "../../store/store";
+import { getFilteredCharactersSlice, getPaginationSlice, setCharacterID } from "../../Redux/CharacterSlice";
+import { RootState } from "../../Redux/store";
+import { getPagination, searchCharacter } from "../../API/getURL";
+import { Link } from "react-router-dom";
+import { CharacterCard } from "../../Components/CharacterCard/CharacterCard";
+import { ICharacter } from "../../Interfaces/ICharacter";
+import { Pagination } from "../../Components/Pagination/Pagination";
+import style from "./Characters.module.scss";
 
-const Characters = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const loading = useSelector<RootState>(state => state.characters.loading)
-  const ch = useSelector<RootState>(state => state.characters.ch)
-  const character = useSelector<RootState>(state => state.characters.characters)
+export const Characters = () => {
+  const [res, setRes] = useState<any>({});
+  const [characters, setCharacters] = useState([]);
+  const [info, setInfo] = useState<any>({});
+  const [pages, setPages] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paginationCount, setPagination] = useState<number[]>([]);
+  const [preVAndNextLink, setPreVAndNextLink] = useState("");
+  const [prevAndNextPage, setPrevAndNextPage] = useState({
+    prevPage: "",
+    nextPage: "",
+  });
 
-  const [characters, setCharacters] = useState<any>([])
+  const userDataCharacters: any = useSelector((state: RootState) => state.character.characters);
+  const userDataError = useSelector((state: RootState) => state.character.error);
+  const userDataLoading = useSelector((state: RootState) => state.character.loading);
+  const searchedCharacterName = useSelector((state: RootState) => state.character.searchedCharacterName);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPaginationSlice(preVAndNextLink != "" ? preVAndNextLink : getPagination(currentPage.toString())) as any);
+  }, [currentPage, preVAndNextLink]);
+
+  useEffect(() => {
+    dispatch(getFilteredCharactersSlice(searchCharacter(searchedCharacterName)) as any)
+  }, [searchedCharacterName])
+  console.log(searchedCharacterName)
   
-useEffect(() => {
-  dispatch(fetchCharacters())
-  setCharacters(character)
-}, [])
-console.log(characters.results)
-  
+  useEffect(() => {
+    if (userDataCharacters.info && userDataCharacters.info !== undefined) {
+      setCharacters(userDataCharacters.results);
+      setInfo(userDataCharacters.info);
+      setPages(userDataCharacters.info.pages);
+      setPrevAndNextPage({ prevPage: userDataCharacters.info.prev, nextPage: userDataCharacters.info.next });
+    }
+  }, [userDataCharacters]);
+
+  const setPaginationElement = (): any => {
+    if (info !== undefined) {
+      for (let i = 1; i <= pages; i++) {
+        setPagination((paginationCount) => [...paginationCount, i]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    setPaginationElement();
+  }, [pages]);
+
   return (
-    <div>
-      <h1>Characters</h1>
-      <span>{`${ch}`}</span>
-      <button onClick={() => dispatch(increment())}>increment</button>
-      <button onClick={() => dispatch(decrement())}>decrement</button>
-      <button onClick={() => dispatch(incrementByAmount(3))}>incrementByAmount</button>
+    <div className={style.container}>
+      {userDataLoading ? (
+        <div>loading...</div>
+      ) : (
+        characters.map((char: ICharacter) => {
+          return (
+            <Link to={"characterinfo"} key={char.id} onClick={() => dispatch(setCharacterID(char.id))}>
+              <CharacterCard char={char} />
+            </Link>
+          );
+        })
+      )}
+
+      <Pagination
+        paginationCount={paginationCount}
+        prevAndNextPage={prevAndNextPage}
+        currentPage={currentPage}
+        setPreVAndNextLink={setPreVAndNextLink}
+        setCurrentPage={setCurrentPage}
+      />
+        
     </div>
   );
 };
-
-export default Characters;

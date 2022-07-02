@@ -1,27 +1,33 @@
+@import "../../../variables.scss";
+
 .header{
     display: flex;
+    flex-direction: row;
     align-items: center;
     margin: 0;
     height: 50px;
-    background: #aaa;
+    background: $header-bg-color;
     a{
-        height: 50px;
-        color: #fff;
-        &:hover{
-            background: #555;
-            color: #fff;
-            cursor: pointer;
-        }
+        color: $black;
     }
-    &__logo{
-        
+    &__menuItem {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        padding: 0px 20px;
         &:hover{
-            background: #555;
-            color: #fff;
+            background: $gray;
+            color: $white;
             cursor: pointer;
+            a {
+                color: $white;
+            }
         }
         h3{
             margin: 10px 20px
         };
+    }
+    &__searchModule {
+        margin-left: auto;
     }
 }

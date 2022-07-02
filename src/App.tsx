@@ -1,6 +1,6 @@
 
 import './App.scss';
-import { Characters } from './Components/Characters/Characters';
+import { Characters } from './Pages/Characters/Characters';
 import { Route, Routes } from 'react-router';
 import { CharacterInfo } from './Pages/CharacterInfo/CharacterInfo';
 import Page_404 from './Components/Page_404/Page_404';

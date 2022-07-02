@@ -1,5 +1,5 @@
 import style from "./CharacterCard.module.scss";
-import { StatusLabel } from "../../Components/StatusLabel/StatusLabel";
+import { StatusLabel } from "../StatusLabel/StatusLabel";
 
 export const CharacterCard = ({ char }: any) => {
   return (
