@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router';
 import { CharacterInfo } from './Pages/CharacterInfo/CharacterInfo';
 import Page_404 from './Components/Page_404/Page_404';
 import Header from './Components/Header/Header';
-import Home from './Components/home/Home';
+import Home from './Components/Home/Home';
 
 function App() {
   return (
