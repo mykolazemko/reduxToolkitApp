@@ -2,7 +2,7 @@ import style from "./Pagination.module.scss";
 
 export const Pagination = ({ paginationCount, prevAndNextPage,	currentPage,	setPreVAndNextLink, setCurrentPage }: any) => {
   return (
-    <div className="pagination">
+    <div className={style.pagination}>
       {prevAndNextPage.prevPage === null ? (
         <span className={style.disabled}>prev</span>
       ) : (
