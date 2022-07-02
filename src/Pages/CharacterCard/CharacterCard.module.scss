@@ -1,0 +1,28 @@
+.characterCard {
+    &:hover {
+        background-color: #666;
+    }
+    display: flex;
+    align-items: center;
+    width: 40vw;
+    min-width: 400px;
+    height: 200px;
+    background-color: #555;
+    margin: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    .infoLine {
+        display: block;
+        height: 20px;
+        margin-bottom: 5px;
+    }
+    img {
+        height: 200px;
+        margin-right: 5px;
+    }
+    span {
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+    }
+}

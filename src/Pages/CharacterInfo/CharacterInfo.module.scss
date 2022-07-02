@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 50px);
+    padding: 10px;
+    color: #fff;
+    .avatar {
+        height: 400px;
+    }
+    .fullinfo {
+        margin-left: 10px;
+    }
+}
