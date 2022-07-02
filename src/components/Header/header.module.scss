@@ -10,6 +10,9 @@
     a{
         color: $black;
     }
+    svg {
+        margin-top: 3px;
+    }
     &__menuItem {
         display: flex;
         align-items: center;
