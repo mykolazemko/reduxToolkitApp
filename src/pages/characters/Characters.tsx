@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFilteredCharactersSlice, getPaginationSlice, setCharacterID } from "../../Redux/CharacterSlice";
 import { RootState } from "../../Redux/store";
-import { getPagination, searchCharacter } from "../../API/getURL";
+import { getPagination, getPaginationForSearch, searchCharacter } from "../../API/getURL";
 import { Link } from "react-router-dom";
 import { CharacterCard } from "../../Components/CharacterCard/CharacterCard";
 import { ICharacter } from "../../Interfaces/ICharacter";
@@ -10,7 +10,6 @@ import { Pagination } from "../../Components/Pagination/Pagination";
 import style from "./Characters.module.scss";
 
 export const Characters = () => {
-  const [res, setRes] = useState<any>({});
   const [characters, setCharacters] = useState([]);
   const [info, setInfo] = useState<any>({});
   const [pages, setPages] = useState<number>(0);
@@ -33,9 +32,9 @@ export const Characters = () => {
   }, [currentPage, preVAndNextLink]);
 
   useEffect(() => {
-    dispatch(getFilteredCharactersSlice(searchCharacter(searchedCharacterName)) as any)
+    dispatch(getFilteredCharactersSlice(getPaginationForSearch(currentPage.toString(), searchedCharacterName)) as any)
   }, [searchedCharacterName])
-  console.log(searchedCharacterName)
+  console.log(characters)
   
   useEffect(() => {
     if (userDataCharacters.info && userDataCharacters.info !== undefined) {
@@ -56,6 +55,11 @@ export const Characters = () => {
 
   useEffect(() => {
     setPaginationElement();
+    return () => {
+    
+      setPagination([]);
+    }
+
   }, [pages]);
 
   return (

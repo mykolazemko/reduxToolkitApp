@@ -1,15 +1,21 @@
 @import "../../../variables.scss";
 
-.paginationItem {
-  margin: 0px 3px;
-}
-.active {
-  color: $white;
-  &:hover {
-    cursor: pointer;
-    color: $gray-hover;
-}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  width: 100vw;
+  .paginationItem {
+    margin: 0px 3px;
   }
-.disabled {
-  color: $gray;
+  .active {
+    color: $white;
+    &:hover {
+      cursor: pointer;
+      color: $gray-hover;
+  }
+    }
+  .disabled {
+    color: $gray;
+  }
 }
